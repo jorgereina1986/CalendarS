@@ -11,8 +11,6 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by jorgereina on 6/25/18.
@@ -20,7 +18,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MonthFragmentPresenter implements MonthFragmentPresenterContract.Presenter {
 
-    private static final String BASE_URL = "https://spotical.herokuapp.com";
     private static final String TAG = MainActivity.class.getSimpleName() + "lagarto";
 
     private View view;
@@ -32,16 +29,8 @@ public class MonthFragmentPresenter implements MonthFragmentPresenterContract.Pr
     }
 
     private void getEventsRequest() {
-
-        Retrofit retrofit = new  Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        CalendarApi service = retrofit.create(CalendarApi.class);
-
+        CalendarApi service = RetrofitInstance.getRetrofitInstance().create(CalendarApi.class);
         Call<List<Event>> call = service.getEvents();
-
         call.enqueue(new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, retrofit2.Response<List<Event>> response) {

@@ -9,11 +9,12 @@ import org.parceler.Parcel;
 @Parcel
 public class Event {
 
-    private String id;
-    private String title;
-    private String date;
-    private String description;
-    private String time;
+    // non-private fields and empty constructor needed to for Parcel annotation to work
+    String id;
+    String title;
+    String date;
+    String description;
+    String time;
 
     public Event() {
     }
