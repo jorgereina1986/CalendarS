@@ -1,9 +1,12 @@
 package com.jorgereina.calendars.model;
 
+import org.parceler.Parcel;
+
 /**
  * Created by jorgereina on 6/25/18.
  */
 
+@Parcel
 public class Event {
 
     private String id;
@@ -11,6 +14,9 @@ public class Event {
     private String date;
     private String description;
     private String time;
+
+    public Event() {
+    }
 
     public Event(String title, String date, String description, String time) {
         this.title = title;

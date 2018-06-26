@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:id="@+id/calendar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -496,6 +497,23 @@
 
 
             </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/calendar_layout">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/month_events_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </RelativeLayout>
     </android.support.constraint.ConstraintLayout>
 </layout>
