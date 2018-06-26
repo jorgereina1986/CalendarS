@@ -1,9 +1,11 @@
 package com.jorgereina.calendars;
 
+import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.jorgereina.calendars.calendarfragment.CalendarFragment;
 import com.jorgereina.calendars.model.Event;
 
 import java.util.List;
@@ -17,37 +19,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName() + "lagarto";
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
+        if (savedInstanceState != null) {
+            return;
+        }
+        if (findViewById(R.id.fragment_container) != null) {
 
-        Retrofit retrofit = new  Retrofit.Builder()
-                .baseUrl("https://spotical.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+            CalendarFragment earthquakeFragment = new CalendarFragment();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .add(R.id.fragment_container, earthquakeFragment, "EarthquakeFragment")
+                    .commit();
 
-        CalendarApi service = retrofit.create(CalendarApi.class);
+        }
 
-        Call<List<Event>> call = service.getEvents();
-
-        call.enqueue(new Callback<List<Event>>() {
-            @Override
-            public void onResponse(Call<List<Event>> call, retrofit2.Response<List<Event>> response) {
-                Log.d(TAG, "onResponse: " + response.isSuccessful());
-            }
-
-            @Override
-            public void onFailure(Call<List<Event>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
-
-            }
-        });
 
     }
 }
