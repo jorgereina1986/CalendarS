@@ -57,12 +57,12 @@ public class MonthFragmentPresenter implements MonthFragmentPresenterContract.Pr
     }
 
     @Override
-    public int getEventsCount() {
+    public int onGetEventsCount() {
         return events.size();
     }
 
     @Override
-    public Event getEventData(int position) {
+    public Event onGetEventData(int position) {
         return events.get(position);
     }
 

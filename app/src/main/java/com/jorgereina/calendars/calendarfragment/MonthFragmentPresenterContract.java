@@ -14,9 +14,13 @@ public interface MonthFragmentPresenterContract {
     interface View {
 
         void loadEventData();
+
         void showProgress();
+
         void hideProgress();
+
         void showDayDetails(int day);
+
         void fetchEventError(String message);
     }
 
@@ -24,9 +28,9 @@ public interface MonthFragmentPresenterContract {
 
         void onDaySelectedClicked(int day);
 
-        int getEventsCount();
+        int onGetEventsCount();
 
-        Event getEventData(int position);
+        Event onGetEventData(int position);
 
         void onViewInitialized();
     }

@@ -6,6 +6,8 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -21,8 +23,12 @@ public interface CalendarApi {
     @GET("events")
     Call<List<Event>> getEvents();
 
+    @FormUrlEncoded
     @POST("events")
-    Call<List<Event>> postEvent();
+    Call<List<Event>> postEvent(@Field("title") String title,
+                                @Field("date") String date,
+                                @Field("description") String description,
+                                @Field("time") String time);
 
     @PUT("events/{id}")
     Call<List<Event>> editEvent(@Path("id") String id);

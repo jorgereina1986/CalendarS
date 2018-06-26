@@ -32,13 +32,13 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.MonthViewHol
     @Override
     public void onBindViewHolder(@NonNull MonthViewHolder holder, int position) {
 
-        Event event = presenter.getEventData(position);
+        Event event = presenter.onGetEventData(position);
         holder.binding.eventTitleTv.setText(event.getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return presenter.getEventsCount();
+        return presenter.onGetEventsCount();
     }
 
     public class MonthViewHolder extends RecyclerView.ViewHolder {
