@@ -7,12 +7,15 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.jorgereina.calendars.R;
 import com.jorgereina.calendars.databinding.FragmentDayBinding;
 import com.jorgereina.calendars.model.Event;
 
 import org.parceler.Parcels;
+
+import java.util.List;
 
 /**
  * Created by jorgereina on 6/25/18.
@@ -21,6 +24,7 @@ import org.parceler.Parcels;
 public class DayFragment extends Fragment {
 
     private static final String EVENT_PARCEL = "event_parcel";
+    private static final String DAY_PARCEL = "day_parcel";
 
     private FragmentDayBinding binding;
 
@@ -35,9 +39,22 @@ public class DayFragment extends Fragment {
         return binding.getRoot();
     }
 
-    public static DayFragment newInstance(Event event) {
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Bundle bundle = this.getArguments();
+        List<Event> events = Parcels.unwrap(bundle.getParcelable(EVENT_PARCEL));
+        int day = bundle.getInt(DAY_PARCEL);
+
+
+        Toast.makeText(getActivity(),events.get(0).getTitle() + " " + day, Toast.LENGTH_LONG).show();
+    }
+
+    public static DayFragment newInstance(List<Event> event, int day) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(EVENT_PARCEL, Parcels.wrap(event));
+        bundle.putInt(DAY_PARCEL, day);
         DayFragment fragment = new DayFragment();
         fragment.setArguments(bundle);
         return fragment;

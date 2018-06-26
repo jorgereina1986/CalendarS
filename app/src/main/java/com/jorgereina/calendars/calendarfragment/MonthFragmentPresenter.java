@@ -1,9 +1,13 @@
 package com.jorgereina.calendars.calendarfragment;
 
+import android.widget.Toast;
+
 import com.jorgereina.calendars.CalendarApi;
+import com.jorgereina.calendars.R;
 import com.jorgereina.calendars.calendarfragment.MonthFragmentPresenterContract.View;
 import com.jorgereina.calendars.dayfragment.DayFragment;
 import com.jorgereina.calendars.MainActivity;
+import com.jorgereina.calendars.model.Day;
 import com.jorgereina.calendars.model.Event;
 
 import java.util.ArrayList;
@@ -35,6 +39,7 @@ public class MonthFragmentPresenter implements MonthFragmentPresenterContract.Pr
             @Override
             public void onResponse(Call<List<Event>> call, retrofit2.Response<List<Event>> response) {
                 view.hideProgress();
+                events.clear();
                 events.addAll(response.body());
                 view.loadEventData();
             }
@@ -47,9 +52,8 @@ public class MonthFragmentPresenter implements MonthFragmentPresenterContract.Pr
     }
 
     @Override
-    public void onDayButtonClicked(Event event) {
-
-        DayFragment dayFragment = DayFragment.newInstance(event);
+    public void onDaySelectedClicked(int day) {
+        view.showDayDetails(day);
     }
 
     @Override

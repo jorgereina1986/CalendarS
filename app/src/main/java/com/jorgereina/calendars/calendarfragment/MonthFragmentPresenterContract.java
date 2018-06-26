@@ -1,6 +1,9 @@
 package com.jorgereina.calendars.calendarfragment;
 
+import com.jorgereina.calendars.model.Day;
 import com.jorgereina.calendars.model.Event;
+
+import java.util.List;
 
 /**
  * Created by jorgereina on 6/25/18.
@@ -13,13 +16,13 @@ public interface MonthFragmentPresenterContract {
         void loadEventData();
         void showProgress();
         void hideProgress();
-        void showDayDetails();
+        void showDayDetails(int day);
         void fetchEventError(String message);
     }
 
     interface Presenter {
 
-        void onDayButtonClicked(Event event);
+        void onDaySelectedClicked(int day);
 
         int getEventsCount();
 
