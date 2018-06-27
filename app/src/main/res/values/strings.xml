@@ -39,6 +39,8 @@
     <string name="thursday">Thu</string>
     <string name="friday">Fri</string>
     <string name="saturday">Sat</string>
+
+    // Day Fragment
     <string name="event_created">Event has been created</string>
     <string name="event_not_created">Something went wrong. Event was not created.</string>
 

@@ -1,5 +1,7 @@
 package com.jorgereina.calendars.dayfragment;
 
+import com.jorgereina.calendars.model.Event;
+
 /**
  * Created by jorgereina on 6/26/18.
  */
@@ -12,7 +14,7 @@ public interface DayPresenterContract {
 
         void hideProgress();
 
-        void loadEventsToRecyclerView();
+        void loadDailyEventsToRecyclerView();
 
         void eventCreatedSuccess();
 
@@ -21,6 +23,12 @@ public interface DayPresenterContract {
 
     interface Presenter {
 
+        void onViewInitialized(int day);
+
         void onCreateEventSelected(String title, String date, String description, String time);
+
+        int onGetDailyEventsCount();
+
+        Event onGetEventData(int position);
     }
 }

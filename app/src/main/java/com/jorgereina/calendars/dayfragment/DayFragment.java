@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,14 +32,21 @@ public class DayFragment extends Fragment implements DayPresenterContract.View {
 
     private DayPresenterContract.Presenter presenter;
     private FragmentDayBinding binding;
-    private MonthAdapter adapter;
+    private DayAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_day, container, false);
-        presenter = new DayFragmentPresenter(this);
+        List<Event> events = Parcels.unwrap(this.getArguments().getParcelable(EVENT_LIST_PARCEL));
+        presenter = new DayFragmentPresenter(this, events);
+        int day = this.getArguments().getInt(DAY_PARCEL);
+        adapter = new DayAdapter(presenter);
+        presenter.onViewInitialized(day);
+        layoutManager = new LinearLayoutManager(getActivity());
+        binding.dayRv.setLayoutManager(layoutManager);
+        binding.dayRv.setAdapter(adapter);
         hideProgress();
         return binding.getRoot();
     }
@@ -47,15 +55,12 @@ public class DayFragment extends Fragment implements DayPresenterContract.View {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Bundle bundle = this.getArguments();
-        List<Event> events = Parcels.unwrap(bundle.getParcelable(EVENT_LIST_PARCEL));
-        final int day = bundle.getInt(DAY_PARCEL);
-
-        Toast.makeText(getActivity(), events.get(0).getTitle() + " " + day, Toast.LENGTH_LONG).show();
+        final int day = this.getArguments().getInt(DAY_PARCEL);
 
         binding.addEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showProgress();
                 presenter.onCreateEventSelected(
                         binding.titleEt.getText().toString(),
                         String.valueOf(day),
@@ -74,7 +79,6 @@ public class DayFragment extends Fragment implements DayPresenterContract.View {
         return fragment;
     }
 
-
     @Override
     public void showProgress() {
         binding.dayPb.setVisibility(View.VISIBLE);
@@ -82,12 +86,12 @@ public class DayFragment extends Fragment implements DayPresenterContract.View {
 
     @Override
     public void hideProgress() {
-        binding.dayPb.setVisibility(View.INVISIBLE);
+        binding.dayPb.setVisibility(View.GONE);
     }
 
     @Override
-    public void loadEventsToRecyclerView() {
-        makeToast(R.string.event_not_created);
+    public void loadDailyEventsToRecyclerView() {
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -100,7 +104,7 @@ public class DayFragment extends Fragment implements DayPresenterContract.View {
 
     @Override
     public void eventFailedToCreate() {
-
+        makeToast(R.string.event_not_created);
     }
 
     private void makeToast(int message) {

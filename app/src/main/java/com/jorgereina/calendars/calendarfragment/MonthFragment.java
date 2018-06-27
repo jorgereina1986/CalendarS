@@ -18,8 +18,6 @@ import com.jorgereina.calendars.databinding.FragmentMonthBinding;
 import com.jorgereina.calendars.dayfragment.DayFragment;
 import com.jorgereina.calendars.model.Event;
 
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.List;
 
