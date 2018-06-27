@@ -9,12 +9,18 @@ public interface DayPresenterContract {
     interface View {
 
         void showProgress();
+
         void hideProgress();
+
         void loadEventsToRecyclerView();
+
+        void eventCreatedSuccess();
+
+        void eventFailedToCreate();
     }
 
     interface Presenter {
 
-        void onCreateEvent();
+        void onCreateEventSelected(String title, String date, String description, String time);
     }
 }

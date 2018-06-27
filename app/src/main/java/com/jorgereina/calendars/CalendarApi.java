@@ -25,7 +25,7 @@ public interface CalendarApi {
 
     @FormUrlEncoded
     @POST("events")
-    Call<List<Event>> postEvent(@Field("title") String title,
+    Call<Event> postEvent(@Field("title") String title,
                                 @Field("date") String date,
                                 @Field("description") String description,
                                 @Field("time") String time);

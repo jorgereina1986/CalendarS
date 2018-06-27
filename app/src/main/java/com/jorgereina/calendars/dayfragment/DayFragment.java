@@ -39,7 +39,7 @@ public class DayFragment extends Fragment implements DayPresenterContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_day, container, false);
         presenter = new DayFragmentPresenter(this);
-
+        hideProgress();
         return binding.getRoot();
     }
 
@@ -47,13 +47,22 @@ public class DayFragment extends Fragment implements DayPresenterContract.View {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter.onCreateEvent();
-
         Bundle bundle = this.getArguments();
         List<Event> events = Parcels.unwrap(bundle.getParcelable(EVENT_LIST_PARCEL));
-        int day = bundle.getInt(DAY_PARCEL);
+        final int day = bundle.getInt(DAY_PARCEL);
 
         Toast.makeText(getActivity(), events.get(0).getTitle() + " " + day, Toast.LENGTH_LONG).show();
+
+        binding.addEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.onCreateEventSelected(
+                        binding.titleEt.getText().toString(),
+                        String.valueOf(day),
+                        binding.descriptionEt.getText().toString(),
+                        binding.timeEt.getText().toString());
+            }
+        });
     }
 
     public static DayFragment newInstance(List<Event> event, int day) {
@@ -68,16 +77,33 @@ public class DayFragment extends Fragment implements DayPresenterContract.View {
 
     @Override
     public void showProgress() {
-
+        binding.dayPb.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-
+        binding.dayPb.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void loadEventsToRecyclerView() {
+        makeToast(R.string.event_not_created);
+    }
 
+    @Override
+    public void eventCreatedSuccess() {
+        binding.titleEt.setText("");
+        binding.descriptionEt.setText("");
+        binding.timeEt.setText("");
+        makeToast(R.string.event_created);
+    }
+
+    @Override
+    public void eventFailedToCreate() {
+
+    }
+
+    private void makeToast(int message) {
+        Toast.makeText(getActivity(), getString(message), Toast.LENGTH_LONG).show();
     }
 }
