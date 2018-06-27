@@ -12,13 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.jorgereina.calendars.R;
-import com.jorgereina.calendars.calendarfragment.MonthAdapter;
 import com.jorgereina.calendars.databinding.FragmentDayBinding;
 import com.jorgereina.calendars.model.Event;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,16 +32,16 @@ public class DayFragment extends Fragment implements DayPresenterContract.View {
     private FragmentDayBinding binding;
     private DayAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private List<Event> events;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_day, container, false);
-        List<Event> events = Parcels.unwrap(this.getArguments().getParcelable(EVENT_LIST_PARCEL));
+        events = Parcels.unwrap(this.getArguments().getParcelable(EVENT_LIST_PARCEL));
         presenter = new DayFragmentPresenter(this, events);
-        int day = this.getArguments().getInt(DAY_PARCEL);
         adapter = new DayAdapter(presenter);
-        presenter.onViewInitialized(day);
+        presenter.onViewInitialized(this.getArguments().getInt(DAY_PARCEL));
         layoutManager = new LinearLayoutManager(getActivity());
         binding.dayRv.setLayoutManager(layoutManager);
         binding.dayRv.setAdapter(adapter);

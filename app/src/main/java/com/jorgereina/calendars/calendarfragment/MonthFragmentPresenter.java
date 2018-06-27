@@ -8,7 +8,6 @@ import com.jorgereina.calendars.R;
 import com.jorgereina.calendars.calendarfragment.MonthFragmentPresenterContract.View;
 import com.jorgereina.calendars.dayfragment.DayFragment;
 import com.jorgereina.calendars.MainActivity;
-import com.jorgereina.calendars.model.Day;
 import com.jorgereina.calendars.model.Event;
 
 import java.util.ArrayList;

@@ -19,7 +19,7 @@ public class DayFragmentPresenter implements DayPresenterContract.Presenter {
 
     private DayPresenterContract.View view;
     private List<Event> events = new ArrayList<>();
-    List<Event> dailyEvents = new ArrayList<>();
+    private List<Event> dailyEvents = new ArrayList<>();
 
 
     public DayFragmentPresenter(DayPresenterContract.View view, List<Event> events) {
@@ -29,7 +29,7 @@ public class DayFragmentPresenter implements DayPresenterContract.Presenter {
 
     private void getSingleDayEvents(int day) {
         for (Event event : events) {
-            if (event.getDate()!= null) {
+            if (event.getDate() != null) {
                 if (Integer.parseInt(event.getDate()) == day) {
                     dailyEvents.add(event);
                 }
